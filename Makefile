@@ -5,23 +5,27 @@ command-list:
 	@echo " make nbuild            - docker compose build --no-cache"
 	@echo " make up                - docker compose up -d"
 	@echo " make down              - docker compose down"
-	@echo " make app               - docker compose exec app bash"
-	@echo " make app-www-data      - docker compose exec --user=www-data app bash"
+	@echo " make laravel           - docker compose exec laravel bash"
 	@echo " make vdown             - docker compose down -v"
-	@echo " make vendor-to-host    - docker cp ykk-dx_app:/var/www/html/vendor vendor-volume"
-	@echo " make vendor-to-app      - docker cp ./vendor ykk-dx_app:/var/www/html/vendor"
-	@echo " make prod-up           - docker compose -f docker-compose.prod.yml up -d"
-	@echo " make prod-up-build     - docker compose -f docker-compose.prod.yml up -d --build"
-	@echo " make log-app           - docker compose logs app"
-	@echo " make log-mysql         - docker compose logs mysql"
-	@echo " make log-phpmyadmin    - docker compose logs phpmyadmin"
+	@echo " make vendor-to-host    - docker compose cp laravel:/var/www/html/vendor vendor-volume"
+	@echo " make vendor-to-app     - docker compose cp ./vendor laravel:/var/www/html/vendor"
 	@echo " make log               - docker compose logs"
+	@echo " make log-laravel       - docker compose logs laravel"
+	@echo " make log-next          - docker compose logs next"
+	@echo " make log-nginx         - docker compose logs nginx"
+	@echo " make log-mysql         - docker compose logs mysql"
+	@echo " make log-mysql-backup  - docker compose logs mysql-backup"
+	@echo " make log-pma           - docker compose logs pma"
+	@echo " make log-certbot       - docker compose logs certbot"
 	@echo " make stop              - docker compose stop"
-	@echo " make stop-app          - docker compose stop app"
+	@echo " make stop-laravel      - docker compose stop laravel"
+	@echo " make stop-next         - docker compose stop next"
+	@echo " make stop-nginx        - docker compose stop nginx"
 	@echo " make stop-mysql        - docker compose stop mysql"
-	@echo " make stop-phpmyadmin   - docker compose stop phpmyadmin"
+	@echo " make stop-mysql-backup - docker compose stop mysql-backup"
+	@echo " make stop-pma          - docker compose stop pma"
+	@echo " make stop-certbot      - docker compose stop certbot"
 	@echo " make ps                - docker compose ps"
-	
 
 # Docker commands
 build:
@@ -39,20 +43,17 @@ up:
 down:
 	docker compose down
 
-app:
-	docker compose exec app bash
-
-app-www-data:
-	docker compose exec --user=www-data app bash
+laravel:
+	docker compose exec laravel bash
 
 vdown:
 	docker compose down -v
 
 vendor-to-host:
-	docker compose cp app:/var/www/html/vendor ./src/
+	docker compose cp laravel:/var/www/html/vendor ./src/
 
-vendor-to-app:
-	docker compose cp ./src/vendor app:/var/www/html/
+vendor-to-container:
+	docker compose cp ./src/vendor laravel:/var/www/html/
 
 prod-up:
 	docker compose -f docker-compose.prod.yml up -d
@@ -60,14 +61,26 @@ prod-up:
 prod-up-build:
 	docker compose -f docker-compose.prod.yml up -d --build
 
-log-app:
-	docker compose logs app
+log-laravel:
+	docker compose logs laravel
+
+log-next:
+	docker compose logs next
+
+log-nginx:
+	docker compose logs nginx
 
 log-mysql:
 	docker compose logs mysql
 
-log-phpmyadmin:
-	docker compose logs phpmyadmin
+log-pma:
+	docker compose logs pma
+
+log-certbot:
+	docker compose logs certbot
+
+log-mysql-backup:
+	docker compose logs mysql-backup
 
 log:
 	docker compose logs
@@ -75,14 +88,26 @@ log:
 stop:
 	docker compose stop
 
-stop-app:
-	docker compose stop app
+stop-laravel:
+	docker compose stop laravel
+
+stop-next:
+	docker compose stop next
+
+stop-nginx:
+	docker compose stop nginx
 
 stop-mysql:
 	docker compose stop mysql
 
-stop-phpmyadmin:
-	docker compose stop phpmyadmin
+stop-pma:
+	docker compose stop pma
+
+stop-certbot:
+	docker compose stop certbot
+
+stop-mysql-backup:
+	docker compose stop mysql-backup
 
 ps:
 	docker compose ps
