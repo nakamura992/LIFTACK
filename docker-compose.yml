@@ -4,13 +4,16 @@ services:
     build:
       context: .
       dockerfile: ./docker/laravel/${LARAVEL_DOCKERFILE:-Dockerfile}
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
     volumes:
       - ./src/:/var/www/html
       - ./logs/laravel:/var/www/html/storage/logs
     environment:
       - XDEBUG_MODE=${XDEBUG_MODE:-off}
     ports:
-      - "8000:8000"
+      - "9000:9000"
 
   next:
     container_name: ${APP_NAME}-next
@@ -32,7 +35,7 @@ services:
       dockerfile: ./docker/nginx/${NGINX_DOCKERFILE:-Dockerfile}
     ports:
       - ${WEB_PORT:-80}:80
-      - ${USE_SSL:-false} == true && 443:443
+      - 443:443
     depends_on:
       - laravel
       - next
@@ -55,7 +58,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ${APP_NAME}-mysql-volume:/var/lib/mysql
+      - mysql-volume:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
       - ./logs/mysql:/var/log/mysql
     depends_on:
@@ -80,6 +83,7 @@ services:
 
   pma:
     container_name: ${APP_NAME}-pma
+    platform: linux/amd64
     build:
       context: .
       dockerfile: ./docker/pma/${PMA_DOCKERFILE:-Dockerfile}
@@ -95,6 +99,7 @@ services:
       - mysql
 
   certbot:
+    container_name: ${APP_NAME}-certbot
     image: certbot/certbot
     volumes:
       - ./docker/certbot/conf:/etc/letsencrypt
@@ -104,9 +109,10 @@ services:
       - USE_SSL=${USE_SSL:-false}
       - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
       - DOMAIN=${DOMAIN}
-    entrypoint: ["/entrypoint.sh"]
+    entrypoint: ["/bin/sh", "-c", "chmod +x /entrypoint.sh && /entrypoint.sh"]
     depends_on:
       - nginx
 
 volumes:
-  ${APP_NAME}-mysql-volume:
+  mysql-volume:
+    name: ${APP_NAME}-mysql-volume

@@ -4,4 +4,4 @@ if [ -f /app/package.json ]; then
     npm install
 fi
 
-exec gosu www-data "$@"
+exec su-exec www-data "$@"

@@ -1,3 +1,3 @@
-FROM phpmyadmin/phpmyadmin:5.2
+FROM phpmyadmin/phpmyadmin:latest
 
 ENV TZ=Asia/Tokyo

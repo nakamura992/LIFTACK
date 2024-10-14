@@ -2,14 +2,14 @@ FROM node:20.18-alpine
 
 ENV TZ=Asia/Tokyo
 
-RUN apt-get update && \
-    apt-get -y install \
+RUN apk update && \
+    apk add --no-cache \
     git \
     zip \
     unzip \
     vim \
     nano \
-    gosu \
+    su-exec \
     make
 
 COPY ./docker/next/entrypoint.sh /entrypoint.sh

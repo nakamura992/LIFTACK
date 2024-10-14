@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+COPY ./docker/laravel/php.ini /usr/local/etc/php/php.ini
 
 ARG UID
 ARG GID
@@ -28,7 +28,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY --from=node:latest /usr/local/bin /usr/local/bin
 COPY --from=node:latest /usr/local/lib /usr/local/lib
 
-COPY ./docker/php/entrypoint.sh /usr/local/bin/entrypoint.sh
+COPY ./docker/laravel/entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
