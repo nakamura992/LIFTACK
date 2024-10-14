@@ -25,5 +25,8 @@ if [ -d "/var/www/html" ]; then
     fi
 fi
 
-# www-dataユーザーに切り替え
-exec gosu www-data "$@"
+# PHPの設定を適用
+php-fpm
+
+# コンテナを実行し続ける
+exec "$@"
