@@ -26,7 +26,7 @@ command-list:
 	@echo " make stop-pma          - docker compose stop pma"
 	@echo " make stop-certbot      - docker compose stop certbot"
 	@echo " make ps                - docker compose ps"
-
+	@echo " make create-next       - docker compose exec next bash -c \"npx create-next-app@latest\""
 # Docker commands
 build:
 	docker compose build
@@ -113,4 +113,4 @@ ps:
 	docker compose ps
 
 create-next:
-	docker compose exec next bash -c "npx create-next-app@latest"
+	docker compose run --rm next npx create-next-app@latest

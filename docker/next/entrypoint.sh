@@ -4,4 +4,6 @@ if [ -f /app/package.json ]; then
     npm install
 fi
 
-exec su-exec www-data "$@"
+npm run dev
+
+exec "$@"
