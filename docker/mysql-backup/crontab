@@ -1,0 +1,4 @@
+# バックアップを毎日午前2時に実行
+0 2 * * * /bin/bash /backup.sh >> /var/log/mysql-backup/cron.log 2>&1
+
+# 空行を入れて終了（重要）
