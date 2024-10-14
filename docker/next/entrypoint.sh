@@ -5,5 +5,3 @@ if [ -f /app/package.json ]; then
 fi
 
 npm run dev
-
-exec "$@"

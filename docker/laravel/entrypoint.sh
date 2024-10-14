@@ -26,7 +26,4 @@ if [ -d "/var/www/html" ]; then
 fi
 
 # PHPの設定を適用
-php-fpm
-
-# コンテナを実行し続ける
-exec "$@"
+exec php-fpm

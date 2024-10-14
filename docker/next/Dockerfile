@@ -1,18 +1,19 @@
-FROM node:20.18-alpine
+FROM node:20.18
 
 ENV TZ=Asia/Tokyo
 
-RUN apk update && \
-    apk add --no-cache \
+RUN apt update && \
+    apt install -y \
     git \
     zip \
     unzip \
     vim \
     nano \
-    su-exec \
     make
 
 COPY ./docker/next/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
+USER node
 
 ENTRYPOINT ["/entrypoint.sh"]

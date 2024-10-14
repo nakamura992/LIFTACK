@@ -17,9 +17,7 @@ RUN apt-get update && \
     gosu \
     make \
     libonig-dev \
-    && docker-php-ext-install pdo_mysql bcmath \
-    && pecl install xdebug \
-    && docker-php-ext-enable xdebug
+    && docker-php-ext-install pdo_mysql bcmath
 
 # Composer install
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer

@@ -6,6 +6,8 @@ command-list:
 	@echo " make up                - docker compose up -d"
 	@echo " make down              - docker compose down"
 	@echo " make laravel           - docker compose exec laravel bash"
+	@echo " make nginx             - docker compose exec nginx sh"
+	@echo " make to-next           - docker compose exec next sh"
 	@echo " make vdown             - docker compose down -v"
 	@echo " make vendor-to-host    - docker compose cp laravel:/var/www/html/vendor vendor-volume"
 	@echo " make vendor-to-app     - docker compose cp ./vendor laravel:/var/www/html/vendor"
@@ -45,6 +47,12 @@ down:
 
 laravel:
 	docker compose exec laravel bash
+
+nginx:
+	docker compose exec nginx bash
+
+to-next:
+	docker compose exec next bash
 
 vdown:
 	docker compose down -v
