@@ -111,3 +111,6 @@ stop-mysql-backup:
 
 ps:
 	docker compose ps
+
+create-next:
+	docker compose exec next bash -c "npx create-next-app@latest"
