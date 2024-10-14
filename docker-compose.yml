@@ -23,7 +23,7 @@ services:
     working_dir: /app
     volumes:
       - ./next/:/app
-      # - ./logs/next:/app/.next/logs
+      - ./logs/next:/app/.next/logs
     depends_on:
       - laravel
     ports:
