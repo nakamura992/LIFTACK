@@ -26,9 +26,4 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 COPY --from=node:latest /usr/local/bin /usr/local/bin
 COPY --from=node:latest /usr/local/lib /usr/local/lib
 
-COPY ./docker/laravel/entrypoint.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
-
 USER www-data
-
-ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

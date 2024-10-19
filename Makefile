@@ -6,6 +6,7 @@ command-list:
 	@echo " make up                - docker compose up -d"
 	@echo " make down              - docker compose down"
 	@echo " make laravel           - docker compose exec laravel bash"
+	@echo " make root-laravel      - docker compose exec -u root laravel /bin/bash"
 	@echo " make nginx             - docker compose exec nginx sh"
 	@echo " make to-next           - docker compose exec next sh"
 	@echo " make vdown             - docker compose down -v"
@@ -29,6 +30,7 @@ command-list:
 	@echo " make stop-certbot      - docker compose stop certbot"
 	@echo " make ps                - docker compose ps"
 	@echo " make create-next       - docker compose exec next bash -c \"npx create-next-app@latest\""
+	@echo " make nginx-reload      - make nginx-test && docker compose exec nginx nginx -s reload"
 # Docker commands
 build:
 	docker compose build
@@ -47,6 +49,9 @@ down:
 
 laravel:
 	docker compose exec laravel bash
+
+root-laravel:
+	docker compose exec -u root laravel /bin/bash
 
 nginx:
 	docker compose exec nginx bash
@@ -122,3 +127,13 @@ ps:
 
 create-next:
 	docker compose run --rm next npx create-next-app@latest
+
+# nginxの設定ファイルのテストとリロード
+nginx-reload:
+	make nginx-test
+	if [ $$? -eq 0 ]; then \
+		docker compose exec nginx nginx -s reload; \
+	fi
+
+nginx-test:
+	docker compose exec nginx nginx -t
